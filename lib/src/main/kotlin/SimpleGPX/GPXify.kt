@@ -1,4 +1,5 @@
 package SimpleGPX
 
-class GPXify {
+fun GPXify(gpxString:String){
+
 }
