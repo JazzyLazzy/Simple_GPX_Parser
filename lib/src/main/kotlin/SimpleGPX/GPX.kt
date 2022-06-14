@@ -3,7 +3,7 @@ package SimpleGPX
 
 import org.w3c.dom.NodeList
 
-class GPX {
+open class GPX {
 
     var creator: String = String()
     var version: String = String()
