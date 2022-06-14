@@ -1,0 +1,4 @@
+package SimpleGPX
+
+class GPXify {
+}
