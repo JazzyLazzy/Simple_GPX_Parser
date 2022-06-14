@@ -9,7 +9,7 @@ import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
 
 
-fun Stringify(fileName:String):String{
+fun GPXToString(fileName:String):String{
     val file = File(fileName);
     val dbf = DocumentBuilderFactory.newInstance();
     val db = dbf.newDocumentBuilder();
