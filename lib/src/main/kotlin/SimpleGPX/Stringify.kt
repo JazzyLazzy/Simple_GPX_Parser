@@ -1,6 +1,7 @@
 package SimpleGPX;
 
 import java.io.File;
+import java.io.IOException
 import java.io.StringWriter
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
@@ -23,4 +24,14 @@ fun Stringify(fileName:String):String{
     val output = writer.buffer.toString().replace("\n|\r".toRegex(), "");
 
     return output;
+}
+
+fun Stringify(gpx:GPX, fileName: String):String{
+    val bogusGPXWriter = SimpleGPXWriter(fileName);
+    bogusGPXWriter.createNewFile()
+        //Log.d("filefolder","found")
+
+    bogusGPXWriter.connectGPX(gpx)
+    bogusGPXWriter.writeGPX()
+    return Stringify(fileName)
 }
