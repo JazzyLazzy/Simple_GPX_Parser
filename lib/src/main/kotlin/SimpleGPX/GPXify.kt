@@ -5,7 +5,7 @@ import org.w3c.dom.Element
 import org.w3c.dom.NodeList
 import org.xml.sax.InputSource
 import java.io.StringReader
-import java.lang.Double
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.xml.parsers.DocumentBuilderFactory
@@ -33,17 +33,18 @@ internal fun GPXifyDocument(document: Document): GPX {
         var desc: String? = null
         var sym: String? = null
         for (j in 0 until waypoint_node.childNodes.length) {
-            if (waypoint_node.childNodes.item(j).nodeName == "name") {
-                name = waypoint_node.childNodes.item(j).nodeValue
+            println(waypoint_node.childNodes.item(j).nodeName)
+            if (waypoint_node.childNodes.item(j).nodeName == "name"){
+                name = waypoint_node.childNodes.item(j).textContent
             } else if (waypoint_node.childNodes.item(j).nodeName == "desc") {
-                desc = waypoint_node.childNodes.item(j).nodeValue
+                desc = waypoint_node.childNodes.item(j).textContent
             } else if (waypoint_node.childNodes.item(j).nodeName == "sym") {
-                sym = waypoint_node.childNodes.item(j).nodeValue
+                sym = waypoint_node.childNodes.item(j).textContent
             }
         }
         val waypoint = GPXWaypoint(
-            Double.valueOf(waypoint_node.attributes.getNamedItem("lat").nodeValue),
-            Double.valueOf(waypoint_node.attributes.getNamedItem("lon").nodeValue), 0.0,
+            waypoint_node.attributes.getNamedItem("lat").nodeValue.toDouble(),
+            waypoint_node.attributes.getNamedItem("lon").nodeValue.toDouble(), 0.0,
             System.currentTimeMillis(), name.toString(), desc.toString(), sym.toString()
         )
 
@@ -63,22 +64,50 @@ internal fun GPXifyDocument(document: Document): GPX {
     val tracks = ArrayList<trk>();
     for (i in 0 until trk_nodeList.length) {
         val trk_node = trk_nodeList.item(i);
+        println(trk_node.nodeName)
         for (j in 0 until trk_node.childNodes.length) {
             val trkseg_node = trk_node.childNodes.item(j)
-            for (k in 0 until trkseg_node.childNodes.length) {
-                val trkpt_node = trkseg_node.childNodes.item(k)
-                val latitude = Double.valueOf(trkpt_node.attributes.getNamedItem("lat").nodeValue)
-                val longitude = Double.valueOf(trkpt_node.attributes.getNamedItem("lon").nodeValue)
-                val elevation = Double.valueOf(trkpt_node.attributes.item(0).nodeValue)
-                val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.ss")
-                val time = LocalDateTime.parse(trkpt_node.attributes.item(1).nodeValue, formatter)
-                val trkpt = TrackPoint(
-                    latitude,
-                    longitude,
-                    elevation,
-                    time
-                )
-                trkpts.add(trkpt);
+            println(trkseg_node.nodeName)
+            if (trkseg_node.nodeName != "name"){
+                for (k in 0 until trkseg_node.childNodes.length) {
+                    val trkpt_node = trkseg_node.childNodes.item(k)
+                    if (trkpt_node.nodeName == "trkpt"){
+                        val latitude = trkpt_node.attributes.getNamedItem("lat").nodeValue.toDouble()
+                        val longitude = trkpt_node.attributes.getNamedItem("lon").nodeValue.toDouble()
+                        var elevation: Double? = null;
+                        var time:LocalDateTime? = null;
+                        for (l in 0 until trkpt_node.childNodes.length){
+                            if (trkpt_node.childNodes.item(l).nodeName == "ele"){
+                                println(trkpt_node.childNodes.item(l).textContent)
+                                elevation = trkpt_node.childNodes.item(l).textContent.toDouble()
+                            }else if(trkpt_node.childNodes.item(l).nodeName == "time"){
+                                println(trkpt_node.childNodes.item(l).textContent)
+                                time = LocalDateTime.parse(trkpt_node.childNodes.item(l).textContent)
+                            }
+                        }
+                        var trkpt: TrackPoint?;
+                        if(elevation != null && time != null){
+                            trkpt = TrackPoint(
+                                latitude,
+                                longitude,
+                                elevation,
+                                time
+                            )
+                        }else if(elevation != null){
+                            val bogusLocation = GPXParserLocation(latitude, longitude, elevation)
+                            trkpt = TrackPoint(bogusLocation)
+                        }else if (time != null){
+                            val bogusLocation = GPXParserLocation(latitude, longitude, time)
+                            trkpt = TrackPoint(bogusLocation)
+                        }else{
+                            val bogusLocation = GPXParserLocation(latitude, longitude)
+                            trkpt = TrackPoint(bogusLocation)
+                        }
+                        trkpts.add(trkpt);
+                    }
+
+
+                }
             }
             trkseg.trkpts = trkpts
             track.trksegs.add(trkseg)
