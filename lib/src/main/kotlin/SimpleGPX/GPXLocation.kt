@@ -18,6 +18,13 @@ open class GPXParserLocation{
         this.latitude = latitude
         this.longitude = longitude
         this.elevation = elevation
+        this.time = LocalDateTime.now()
+    }
+
+    constructor(latitude: Double, longitude: Double){
+        this.latitude = latitude
+        this.longitude = longitude
+        this.time = LocalDateTime.now()
     }
 
     constructor(latitude: Double, longitude: Double, elevation:Double, time:LocalDateTime){
@@ -34,6 +41,17 @@ open class GPXParserLocation{
         this.time = long_to_time(time)
     }
 
+    constructor(latitude: Double, longitude: Double, time:Long){
+        this.latitude = latitude
+        this.longitude = longitude
+        this.time = long_to_time(time)
+    }
+
+    constructor(latitude: Double, longitude: Double, time:LocalDateTime){
+        this.latitude = latitude
+        this.longitude = longitude
+        this.time = time
+    }
 
     companion object {
         @JvmStatic

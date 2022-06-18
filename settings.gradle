@@ -9,3 +9,6 @@
 
 rootProject.name = 'SimpleGPX'
 include('lib')
+include 'lib:src:test:java'
+findProject(':lib:src:test:java')?.name = 'java'
+
