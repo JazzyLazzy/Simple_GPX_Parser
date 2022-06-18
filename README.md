@@ -2,6 +2,6 @@
 A simple GPX Parser for Java/Kotlin/Android apps.
 
 # Example
-[In Kotlin](../tree/master/lib/src/test/kotlin/SimpleGPX)
+[In Kotlin](https://github.com/JazzyLazzy/Simple_GPX_Parser/tree/master/lib/src/test/kotlin/SimpleGPX/SimpleGPXTest.kt)
 
-[In boilerplate(Java)](../tree/master/lib/src/test/kotlin/SimpleGPX/SimpleGPXTest.java)
+[In boilerplate(Java)](https://github.com/JazzyLazzy/Simple_GPX_Parser/tree/master/lib/src/test/kotlin/SimpleGPX/SimpleGPXTest.java)
