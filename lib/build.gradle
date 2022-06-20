@@ -10,6 +10,9 @@ plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id 'org.jetbrains.kotlin.jvm' version '1.5.31'
 
+    //Dokka plugin for kDocs
+    id 'org.jetbrains.dokka' version '1.6.21'
+
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
 }
@@ -37,4 +40,5 @@ dependencies {
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
+
 }
