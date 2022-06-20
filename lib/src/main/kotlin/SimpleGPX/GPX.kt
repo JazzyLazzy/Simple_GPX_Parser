@@ -17,6 +17,12 @@ open class GPX {
         this.version = version
     }
 
+    constructor(creator:String, version: String, tracks: ArrayList<trk>){
+        this.creator = creator
+        this.version = version
+        this.tracks = tracks
+    }
+
     constructor(creator:String, version:String, waypoints:ArrayList<GPXWaypoint>, tracks:ArrayList<trk>){
         this.creator = creator
         this.version = version
