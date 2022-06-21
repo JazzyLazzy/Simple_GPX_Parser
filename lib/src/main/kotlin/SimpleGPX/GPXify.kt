@@ -108,6 +108,8 @@ internal fun GPXifyDocument(document: Document): GPX {
 
 
                 }
+            }else{
+                track.name = trkseg_node.textContent
             }
             trkseg.trkpts = trkpts
             track.trksegs.add(trkseg)
