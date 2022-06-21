@@ -64,8 +64,4 @@ open class SimpleGPXWriter(fileName:String) : SimpleGPXFile(fileName){
     fun connectGPX(gpx:GPX){
         this.gpx = gpx
     }
-
-    fun getGPX():GPX{
-        return gpx
-    }
 }
