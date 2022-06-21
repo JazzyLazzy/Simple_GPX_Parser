@@ -10,7 +10,7 @@ import javax.xml.stream.XMLStreamWriter
 
 open class SimpleGPXWriter(fileName:String) : SimpleGPXFile(fileName){
 
-    protected lateinit var gpx:GPX
+    private lateinit var gpx:GPX
 
     fun writeGPX(){
         try {
@@ -63,5 +63,9 @@ open class SimpleGPXWriter(fileName:String) : SimpleGPXFile(fileName){
 
     fun connectGPX(gpx:GPX){
         this.gpx = gpx
+    }
+
+    fun getGPX():GPX{
+        return this.gpx
     }
 }
