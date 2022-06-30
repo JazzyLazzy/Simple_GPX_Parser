@@ -85,6 +85,7 @@ internal fun GPXifyDocument(document: Document): GPX {
                                 elevation = trkpt_node.childNodes.item(l).textContent.toDouble()
                             }else if(trkpt_node.childNodes.item(l).nodeName == "time"){
                                 //println(trkpt_node.childNodes.item(l).textContent)
+
                                 try{
                                     time = LocalDateTime.parse(trkpt_node.childNodes.item(l).textContent)
                                 }catch(err:DateTimeParseException){
@@ -92,7 +93,6 @@ internal fun GPXifyDocument(document: Document): GPX {
                                     val zone = ZoneId.of("America/Los_Angeles")
                                     time = LocalDateTime.ofInstant(instant,zone);
                                 }
-
                             }
                         }
                         var trkpt: TrackPoint?;
