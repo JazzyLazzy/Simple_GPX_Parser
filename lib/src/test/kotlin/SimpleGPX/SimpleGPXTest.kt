@@ -1,5 +1,8 @@
 package SimpleGPX
 
+import java.time.LocalDateTime
+import kotlin.collections.ArrayList
+
 /*This is an example implementation of Simple GPX Parser.
 Here you will learn to create a new GPX, create waypoints
 and tracks, write to file, and read from file.
@@ -54,4 +57,36 @@ fun main(){
     val bogusGPXParser = SimpleGPXParser("./bogus.gpx");
     val bogusGPX = bogusGPXParser.parseGPX()
     println(Stringify(bogusGPX, "./sugob.gpx" ))
+
+
+    val testparse = SimpleGPXParser("../sample-gpx/BrittanyJura/large_test.gpx");
+    println("start parse:" + LocalDateTime.now().toString());
+    val mgpx = testparse.parseGPX();
+    /*val diff = LinkedList<Long>();
+    for (i in 0..1000) {
+        val start = System.currentTimeMillis();
+        val mgpx = testparse.parseGPX();
+        val end = System.currentTimeMillis();
+        diff.add(end - start)
+    }
+    File("./somefile1.txt").printWriter().use { out ->
+        diff.forEach {
+            out.println("$it")
+        }
+    }*/
+    /*println("end parse:" + LocalDateTime.now().toString())
+    println("start loop:" + LocalDateTime.now().toString());
+    val ll = LinkedList<Int>()
+    for (i in 0..4000000){
+        ll.addLast(i);
+    }
+    println("start loop 2:" + LocalDateTime.now().toString());
+    val al = java.util.ArrayList<Int>()
+    for (i in 0..4000000){
+        al.add(i);
+    }
+    println("end loop 2:" + LocalDateTime.now().toString());
+    //val diff = end - start
+    //println(diff)
+    //println("size" + mgpx.tracks[0].trksegs[0].trkpts.size)*/
 }
