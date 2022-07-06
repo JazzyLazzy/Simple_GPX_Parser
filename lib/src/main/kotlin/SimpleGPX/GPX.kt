@@ -60,12 +60,23 @@ open class GPX {
 
     //Add track point to the very end of the entire gpx track
     fun addTrackPointToEnd(trkPoint:TrackPoint){
-        this.tracks.last().trksegs.last().trkpts.add(trkPoint);
+        try{
+            this.tracks.last().trksegs.last().trkpts.add(trkPoint);
+        }catch(err:NoSuchElementException){
+            val trkPoints = ArrayList<TrackPoint>();
+            trkPoints.add(trkPoint);
+            this.tracks.add(createNewTrack(trkPoints));
+        }
     }
 
     //Remove the very last track point
-    fun removeTrackPointFromEnd(){
-        this.tracks.last().trksegs.last().trkpts.removeLast();
+    fun removeTrackPointFromEnd():Boolean{
+        try{
+            this.tracks.last().trksegs.last().trkpts.removeLast();
+            return true;
+        }catch(err:NoSuchElementException){
+            return false;
+        }
     }
 
     fun remove_allWaypoints(){
