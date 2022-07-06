@@ -58,10 +58,12 @@ open class GPX {
         }
     }
 
+    //Add track point to the very end of the entire gpx track
     fun addTrackPointToEnd(trkPoint:TrackPoint){
         this.tracks.last().trksegs.last().trkpts.add(trkPoint);
     }
 
+    //Remove the very last track point
     fun removeTrackPointFromEnd(){
         this.tracks.last().trksegs.last().trkpts.removeLast();
     }
