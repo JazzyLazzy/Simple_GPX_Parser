@@ -59,11 +59,11 @@ open class GPX {
     }
 
     fun addTrackPointToEnd(trkPoint:TrackPoint){
-        val trkseglength = this.tracks.last().trksegs.last().trkpts.add(trkPoint);
+        this.tracks.last().trksegs.last().trkpts.add(trkPoint);
     }
 
     fun removeTrackPointFromEnd(){
-
+        this.tracks.last().trksegs.last().trkpts.removeLast();
     }
 
     fun remove_allWaypoints(){
