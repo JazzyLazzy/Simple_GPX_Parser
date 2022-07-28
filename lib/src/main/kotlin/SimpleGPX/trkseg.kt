@@ -5,7 +5,7 @@ import kotlin.math.*
 
 internal val EARTH_RADIUS_KM = 6371;
 
-data class trkseg(var trkpts: ArrayList<TrackPoint>)
+data class trkseg(var trkpts: ArrayList<TrackPoint>);
 
 internal fun degreesToRadians(degrees:Double):Double{
     return degrees * PI / 180;
