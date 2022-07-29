@@ -56,6 +56,6 @@ fun main(){
 
     val bogusGPXParser = SimpleGPXParser("./bogus.gpx");
     val bogusGPX = bogusGPXParser.parseGPX()
-    println(Stringify(bogusGPX, "./sugob.gpx" ))
+    println(Stringify(bogusGPX, "./sugob.gpx" ));
 
 }
