@@ -55,7 +55,7 @@ fun main(){
     println(Stringify("./White_House_Kremlin_Track"))
 
     val bogusGPXParser = SimpleGPXParser("./bogus.gpx");
-    val bogusGPX = bogusGPXParser.parseGPX()
+    val bogusGPX = bogusGPXParser.parseGPX();
     println(Stringify(bogusGPX, "./sugob.gpx" ));
 
 }
