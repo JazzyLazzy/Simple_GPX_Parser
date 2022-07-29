@@ -1,5 +1,7 @@
 package SimpleGPX
 
+import javax.sound.midi.Track
+
 /*This is an example implementation of Simple GPX Parser.
 Here you will learn to create a new GPX, create waypoints
 and tracks, write to file, and read from file.
@@ -15,7 +17,8 @@ fun main(){
     /*Create waypoints at the White House and the Kremlin.*/
     val locWhiteHouse = GPXParserLocation(38.89723, -77.03623)
     val wptWhiteHouse = GPXWaypoint(locWhiteHouse, "White House")
-    val locKremlin = GPXParserLocation(55.7513066, 37.6159268)
+  //  51.49945266389364, -0.12480920155048388
+    val locKremlin = GPXParserLocation(51.49945266389364, -0.12480920155048388)
     val wptKremlin = GPXWaypoint(locKremlin, "Kremlin")
 
     /*Create a track from White House to Kremlin
@@ -54,4 +57,5 @@ fun main(){
     val bogusGPXParser = SimpleGPXParser("./bogus.gpx");
     val bogusGPX = bogusGPXParser.parseGPX()
     println(Stringify(bogusGPX, "./sugob.gpx" ))
+
 }
