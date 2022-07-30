@@ -7,7 +7,9 @@ import org.xml.sax.InputSource
 import java.io.StringReader
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.String
 import kotlin.collections.ArrayList
@@ -57,17 +59,18 @@ internal fun GPXifyDocument(document: Document): GPX {
     A track is an array of track segments.
     A track segment is an array of track points.*/
     val trk_nodeList: NodeList = rootElement.getElementsByTagName("trk");
-    val trkpts = ArrayList<TrackPoint>();
+    val trkpts = ArrayList<TrackPoint>(trk_nodeList.length);
     val trkseg = trkseg(trkpts);
     val trackName:String? = null;
     val track = trk(trackName, ArrayList());
     val tracks = ArrayList<trk>();
+    //println("start_loop: " + LocalDateTime.now());
     for (i in 0 until trk_nodeList.length) {
         val trk_node = trk_nodeList.item(i);
-        println(trk_node.nodeName)
+        //println(trk_node.nodeName)
         for (j in 0 until trk_node.childNodes.length) {
             val trkseg_node = trk_node.childNodes.item(j)
-            println(trkseg_node.nodeName)
+            //println(trkseg_node.nodeName)
             if (trkseg_node.nodeName != "name"){
                 for (k in 0 until trkseg_node.childNodes.length) {
                     val trkpt_node = trkseg_node.childNodes.item(k)
@@ -78,11 +81,18 @@ internal fun GPXifyDocument(document: Document): GPX {
                         var time:LocalDateTime? = null;
                         for (l in 0 until trkpt_node.childNodes.length){
                             if (trkpt_node.childNodes.item(l).nodeName == "ele"){
-                                println(trkpt_node.childNodes.item(l).textContent)
+                                //println(trkpt_node.childNodes.item(l).textContent)
                                 elevation = trkpt_node.childNodes.item(l).textContent.toDouble()
                             }else if(trkpt_node.childNodes.item(l).nodeName == "time"){
-                                println(trkpt_node.childNodes.item(l).textContent)
-                                time = LocalDateTime.parse(trkpt_node.childNodes.item(l).textContent)
+                                //println(trkpt_node.childNodes.item(l).textContent)
+
+                                try{
+                                    time = LocalDateTime.parse(trkpt_node.childNodes.item(l).textContent)
+                                }catch(err:DateTimeParseException){
+                                    val instant = Instant.parse(trkpt_node.childNodes.item(l).textContent)
+                                    val zone = ZoneId.of("America/Los_Angeles")
+                                    time = LocalDateTime.ofInstant(instant,zone);
+                                }
                             }
                         }
                         var trkpt: TrackPoint?;
@@ -116,7 +126,7 @@ internal fun GPXifyDocument(document: Document): GPX {
         }
         tracks.add(track)
     }
-
+    //println("end_loop: " + LocalDateTime.now());
     return GPX(creator, version, waypoints, tracks)
 }
 private fun documentBuilder(gpxString:String):Document{
