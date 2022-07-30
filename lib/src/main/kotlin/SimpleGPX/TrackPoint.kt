@@ -13,6 +13,12 @@ open class TrackPoint : GPXParserLocation {
     constructor(location: GPXParserLocation) :
             super(location.latitude, location.longitude, location.elevation, location.time)
 
+    constructor(latitude:Double, longitude: Double, elevation: Double) :
+            super(latitude, longitude, elevation)
+
+    constructor(latitude:Double, longitude: Double) :
+            super(latitude, longitude)
+
     val eleDistance:Boolean = true;
 
 }

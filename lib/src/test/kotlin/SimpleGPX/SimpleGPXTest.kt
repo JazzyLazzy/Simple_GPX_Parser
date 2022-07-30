@@ -1,7 +1,10 @@
 package SimpleGPX
 
+import javax.sound.midi.Track
+
 import java.time.LocalDateTime
 import kotlin.collections.ArrayList
+
 
 /*This is an example implementation of Simple GPX Parser.
 Here you will learn to create a new GPX, create waypoints
@@ -18,7 +21,8 @@ fun main(){
     /*Create waypoints at the White House and the Kremlin.*/
     val locWhiteHouse = GPXParserLocation(38.89723, -77.03623)
     val wptWhiteHouse = GPXWaypoint(locWhiteHouse, "White House")
-    val locKremlin = GPXParserLocation(55.7513066, 37.6159268)
+  //  51.49945266389364, -0.12480920155048388
+    val locKremlin = GPXParserLocation(51.49945266389364, -0.12480920155048388)
     val wptKremlin = GPXWaypoint(locKremlin, "Kremlin")
 
     /*Create a track from White House to Kremlin
@@ -55,38 +59,6 @@ fun main(){
     println(Stringify("./White_House_Kremlin_Track"))
 
     val bogusGPXParser = SimpleGPXParser("./bogus.gpx");
-    val bogusGPX = bogusGPXParser.parseGPX()
-    println(Stringify(bogusGPX, "./sugob.gpx" ))
-
-
-    val testparse = SimpleGPXParser("../sample-gpx/BrittanyJura/large_test.gpx");
-    println("start parse:" + LocalDateTime.now().toString());
-    val mgpx = testparse.parseGPX();
-    /*val diff = LinkedList<Long>();
-    for (i in 0..1000) {
-        val start = System.currentTimeMillis();
-        val mgpx = testparse.parseGPX();
-        val end = System.currentTimeMillis();
-        diff.add(end - start)
-    }
-    File("./somefile1.txt").printWriter().use { out ->
-        diff.forEach {
-            out.println("$it")
-        }
-    }*/
-    /*println("end parse:" + LocalDateTime.now().toString())
-    println("start loop:" + LocalDateTime.now().toString());
-    val ll = LinkedList<Int>()
-    for (i in 0..4000000){
-        ll.addLast(i);
-    }
-    println("start loop 2:" + LocalDateTime.now().toString());
-    val al = java.util.ArrayList<Int>()
-    for (i in 0..4000000){
-        al.add(i);
-    }
-    println("end loop 2:" + LocalDateTime.now().toString());
-    //val diff = end - start
-    //println(diff)
-    //println("size" + mgpx.tracks[0].trksegs[0].trkpts.size)*/
+    val bogusGPX = bogusGPXParser.parseGPX();
+    println(Stringify(bogusGPX, "./sugob.gpx" ));
 }
