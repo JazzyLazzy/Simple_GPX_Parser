@@ -23,18 +23,23 @@ internal fun distance_between_points(trackPoint1: TrackPoint, trackPoint2: Track
             sin(dLon/2) * sin(dLon/2) * cos(lat1) * cos(lat2);
     val c = 2 * atan2(sqrt(a), sqrt(1-a));
 
+    trackPoint1.nextPoint = trackPoint2;
+    trackPoint2.prevPoint = trackPoint1;
+
     return if (trackPoint1.eleDistance || trackPoint2.eleDistance){
         val flat_dist = EARTH_RADIUS_KM * c;
-        sqrt(flat_dist.pow(2) + (trackPoint2.elevation - trackPoint1.elevation).pow(2));
+        trackPoint1.distToNext = sqrt(flat_dist.pow(2) + (trackPoint2.elevation - trackPoint1.elevation).pow(2));
+        trackPoint1.distToNext!!;
     }else{
-        EARTH_RADIUS_KM * c;
+        trackPoint1.distToNext = EARTH_RADIUS_KM * c;
+        trackPoint1.distToNext!!;
     }
 
 }
 
 fun calculateDistance(trkseg: trkseg):Double{
 
-    var totalDistance:Double = 0.0;
+    var totalDistance = 0.0;
 
     val last = trkseg.trkpts.size - 1;
     for(i in 0 until last){
