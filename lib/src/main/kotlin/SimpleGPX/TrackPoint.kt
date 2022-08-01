@@ -20,5 +20,8 @@ open class TrackPoint : GPXParserLocation {
             super(latitude, longitude)
 
     val eleDistance:Boolean = true;
+    var prevPoint:TrackPoint? = null;
+    var nextPoint:TrackPoint? = null;
+    var distToNext:Double? = null;
 
 }
