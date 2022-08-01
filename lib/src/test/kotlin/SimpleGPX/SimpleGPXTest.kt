@@ -2,6 +2,10 @@ package SimpleGPX
 
 import javax.sound.midi.Track
 
+import java.time.LocalDateTime
+import kotlin.collections.ArrayList
+
+
 /*This is an example implementation of Simple GPX Parser.
 Here you will learn to create a new GPX, create waypoints
 and tracks, write to file, and read from file.
@@ -57,5 +61,4 @@ fun main(){
     val bogusGPXParser = SimpleGPXParser("./bogus.gpx");
     val bogusGPX = bogusGPXParser.parseGPX();
     println(Stringify(bogusGPX, "./sugob.gpx" ));
-
 }
