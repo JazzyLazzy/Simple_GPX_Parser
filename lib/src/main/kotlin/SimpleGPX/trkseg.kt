@@ -19,15 +19,20 @@ internal fun distance_between_points(trackPoint1: TrackPoint, trackPoint2: Track
     val lat1 = degreesToRadians(trackPoint1.latitude);
     val lat2 = degreesToRadians(trackPoint2.latitude);
 
+    trackPoint1.nextPoint = trackPoint2;
+    trackPoint2.prevPoint = trackPoint1;
+
     val a = sin(dLat/2) * sin(dLat/2) +
             sin(dLon/2) * sin(dLon/2) * cos(lat1) * cos(lat2);
     val c = 2 * atan2(sqrt(a), sqrt(1-a));
 
     return if (trackPoint1.eleDistance || trackPoint2.eleDistance){
         val flat_dist = EARTH_RADIUS_KM * c;
-        sqrt(flat_dist.pow(2) + (trackPoint2.elevation - trackPoint1.elevation).pow(2));
+        trackPoint1.distToNext = sqrt(flat_dist.pow(2) + (trackPoint2.elevation - trackPoint1.elevation).pow(2));
+        trackPoint1.distToNext!!;
     }else{
-        EARTH_RADIUS_KM * c;
+        trackPoint1.distToNext = EARTH_RADIUS_KM * c;
+        trackPoint1.distToNext!!;
     }
 
 }
