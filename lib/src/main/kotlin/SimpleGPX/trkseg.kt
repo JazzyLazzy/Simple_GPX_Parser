@@ -49,10 +49,14 @@ fun calculateDistance(trkseg: trkseg):Double{
     return totalDistance;
 }
 
-fun calculatePace(){
+fun calculatePace(trkseg: trkseg):Pace{
+
+    val distance = calculateDistance(trkseg);
+    val time = GPXParserLocation.time_to_long(trkseg.trkpts.last().time) -
+            GPXParserLocation.time_to_long(trkseg.trkpts.first().time);
+    val pace = time / distance;
+    return Pace(floor(pace / 60000).toInt(),pace % 60000);
 
 }
-
-//yyuo765432
 
 fun calculateElevation(trkseg: trkseg){}
