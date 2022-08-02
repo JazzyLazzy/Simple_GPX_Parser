@@ -1,5 +1,6 @@
 package SimpleGPX
 
+import jdk.jfr.Threshold
 import java.util.*
 import kotlin.math.*
 
@@ -54,6 +55,48 @@ fun calculatePace(trkseg: trkseg):Pace{
     val distance = calculateDistance(trkseg);
     val time = GPXParserLocation.time_to_long(trkseg.trkpts.last().time) -
             GPXParserLocation.time_to_long(trkseg.trkpts.first().time);
+    val pace = time / distance;
+    return Pace(floor(pace / 60000).toInt(),pace % 60000);
+
+}
+
+fun calculatePace(trkseg: trkseg, trackPoint1: TrackPoint, trackPoint2: TrackPoint, threshold: Int = 1):Pace{
+
+    var startPoint = trackPoint1;
+    var endPoint = trackPoint2;
+    for (i in 0..threshold){
+        if (startPoint.prevPoint != null){
+            startPoint = startPoint.prevPoint!!;
+        }
+        if (endPoint.nextPoint != null){
+            endPoint = endPoint.nextPoint!!;
+        }
+    }
+
+    val distance = distance_between_points(startPoint, endPoint);
+    val time = GPXParserLocation.time_to_long(startPoint.time) -
+            GPXParserLocation.time_to_long(endPoint.time);
+    val pace = time / distance;
+    return Pace(floor(pace / 60000).toInt(),pace % 60000);
+
+}
+
+fun calculatePace(trkseg: trkseg, trackPoint1: TrackPoint, threshold: Int = 1):Pace{
+
+    var startPoint = trackPoint1;
+    var endPoint = trackPoint1;
+    for (i in 0..threshold){
+        if (startPoint.prevPoint != null){
+            startPoint = startPoint.prevPoint!!;
+        }
+        if (endPoint.nextPoint != null){
+            endPoint = endPoint.nextPoint!!;
+        }
+    }
+
+    val distance = distance_between_points(startPoint, endPoint);
+    val time = GPXParserLocation.time_to_long(startPoint.time) -
+            GPXParserLocation.time_to_long(endPoint.time);
     val pace = time / distance;
     return Pace(floor(pace / 60000).toInt(),pace % 60000);
 
