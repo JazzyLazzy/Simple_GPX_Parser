@@ -48,3 +48,11 @@ fun calculateDistance(trkseg: trkseg):Double{
 
     return totalDistance;
 }
+
+fun calculatePace(){
+
+}
+
+//yyuo765432
+
+fun calculateElevation(trkseg: trkseg){}
