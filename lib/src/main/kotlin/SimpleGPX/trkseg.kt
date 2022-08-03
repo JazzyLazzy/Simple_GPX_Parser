@@ -60,7 +60,7 @@ fun calculatePace(trkseg: trkseg):Pace{
 
 }
 
-fun calculatePace(trkseg: trkseg, trackPoint1: TrackPoint, trackPoint2: TrackPoint, threshold: Int = 1):Pace{
+fun calculatePace(trackPoint1: TrackPoint, trackPoint2: TrackPoint, threshold: Int = 1):Pace{
 
     var startPoint = trackPoint1;
     var endPoint = trackPoint2;
@@ -81,7 +81,7 @@ fun calculatePace(trkseg: trkseg, trackPoint1: TrackPoint, trackPoint2: TrackPoi
 
 }
 
-fun calculatePace(trkseg: trkseg, trackPoint1: TrackPoint, threshold: Int = 1):Pace{
+fun calculatePace(trackPoint1: TrackPoint, threshold: Int = 1):Pace{
 
     var startPoint = trackPoint1;
     var endPoint = trackPoint1;
