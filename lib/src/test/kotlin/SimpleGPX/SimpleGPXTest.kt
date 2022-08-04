@@ -19,10 +19,10 @@ fun main(){
     val gpx = GPX("SimpleGPX_TEST","1.1");
 
     /*Create waypoints at the White House and the Kremlin.*/
-    val locWhiteHouse = GPXParserLocation(38.89723, -77.03623)
+    val locWhiteHouse = GPXParserLocation(38.89723, -77.03623, 0.0)
     val wptWhiteHouse = GPXWaypoint(locWhiteHouse, "White House")
   //  51.49945266389364, -0.12480920155048388
-    val locKremlin = GPXParserLocation(51.49945266389364, -0.12480920155048388)
+    val locKremlin = GPXParserLocation(51.49945266389364, -7.12480920155048388, 0.0)
     val wptKremlin = GPXWaypoint(locKremlin, "Kremlin")
 
     /*Create a track from White House to Kremlin
@@ -56,9 +56,19 @@ fun main(){
     whiteHouseKremlinGPX.tracks
 
     /*Turn it into a string*/
-    println(Stringify("./White_House_Kremlin_Track"))
+    println(Stringify("./White_House_Kremlin_Track.gpx"))
 
-    val bogusGPXParser = SimpleGPXParser("./bogus.gpx");
-    val bogusGPX = bogusGPXParser.parseGPX();
-    println(Stringify(bogusGPX, "./sugob.gpx" ));
+    println(calculateDistance(whiteHouseKremlinTrkSeg))
+
+    val distparse = SimpleGPXParser("./Serqueaux_Dieppe.gpx");
+    var distance = 0.0;
+    val distgpx = distparse.parseGPX();
+    println(distgpx.tracks.size);
+    println(distgpx.tracks[0].trksegs.size);
+    for (trk in distgpx.tracks){
+       for (trkseg in trk.trksegs){
+            distance += calculateDistance(trkseg);
+       }
+    }
+    println(distance);
 }

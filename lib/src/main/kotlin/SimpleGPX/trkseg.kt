@@ -1,6 +1,5 @@
 package SimpleGPX
 
-import jdk.jfr.Threshold
 import java.util.*
 import kotlin.math.*
 
