@@ -19,7 +19,7 @@ open class TrackPoint : GPXParserLocation {
     constructor(latitude:Double, longitude: Double) :
             super(latitude, longitude)
 
-    var eleDistance:Boolean = true;
+    var eleDistance:Boolean = false;
     var nextPoint:TrackPoint? = null;
     var prevPoint:TrackPoint? = null;
     var distToNext:Double? = null;
