@@ -5,7 +5,9 @@ import kotlin.math.*
 
 internal val EARTH_RADIUS_KM = 6371;
 
-data class trkseg(var trkpts: ArrayList<TrackPoint>)
+data class trkseg(var trkpts: ArrayList<TrackPoint>){
+    var distance:Double? = null;
+}
 
 internal fun degreesToRadians(degrees:Double):Double{
     return degrees * PI / 180;
@@ -45,18 +47,21 @@ fun calculateDistance(trkseg: trkseg):Double{
     for(i in 0 until last){
         totalDistance += distance_between_points(trkseg.trkpts[i], trkseg.trkpts[i + 1]);
     }
-
     return totalDistance;
 }
 
 fun calculatePace(trkseg: trkseg):Pace{
 
-    val distance = calculateDistance(trkseg);
-    val time = GPXParserLocation.time_to_long(trkseg.trkpts.last().time) -
+    var distance = 0.0;
+    if (trkseg.distance == null){
+        distance = calculateDistance(trkseg);
+    }
+    //println(trkseg.trkpts.last().latitude)
+    var time = GPXParserLocation.time_to_long(trkseg.trkpts.last().time) -
             GPXParserLocation.time_to_long(trkseg.trkpts.first().time);
+    time = time / 1000;
     val pace = time / distance;
-    return Pace(floor(pace / 60000).toInt(),pace % 60000);
-
+    return Pace(floor(pace / 60).toInt(),pace % 60);
 }
 
 fun calculatePace(trackPoint1: TrackPoint, trackPoint2: TrackPoint, threshold: Int = 1):Pace{
@@ -73,10 +78,11 @@ fun calculatePace(trackPoint1: TrackPoint, trackPoint2: TrackPoint, threshold: I
     }
 
     val distance = distance_between_points(startPoint, endPoint);
-    val time = GPXParserLocation.time_to_long(startPoint.time) -
+    var time = GPXParserLocation.time_to_long(startPoint.time) -
             GPXParserLocation.time_to_long(endPoint.time);
+    time = time / 1000;
     val pace = time / distance;
-    return Pace(floor(pace / 60000).toInt(),pace % 60000);
+    return Pace(floor(pace / 60).toInt(),pace % 60);
 
 }
 
@@ -94,10 +100,11 @@ fun calculatePace(trackPoint1: TrackPoint, threshold: Int = 1):Pace{
     }
 
     val distance = distance_between_points(startPoint, endPoint);
-    val time = GPXParserLocation.time_to_long(startPoint.time) -
+    var time = GPXParserLocation.time_to_long(startPoint.time) -
             GPXParserLocation.time_to_long(endPoint.time);
+    time = time / 1000;
     val pace = time / distance;
-    return Pace(floor(pace / 60000).toInt(),pace % 60000);
+    return Pace(floor(pace / 60).toInt(),pace % 60);
 
 }
 

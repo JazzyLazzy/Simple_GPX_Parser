@@ -60,7 +60,7 @@ fun main(){
 
     println(calculateDistance(whiteHouseKremlinTrkSeg))
 
-    val distparse = SimpleGPXParser("./Serqueaux_Dieppe.gpx");
+    val distparse = SimpleGPXParser("./yeet.gpx");
     var distance = 0.0;
     val distgpx = distparse.parseGPX();
     println(distgpx.tracks.size);
@@ -71,4 +71,6 @@ fun main(){
        }
     }
     println(distance);
+
+    println(calculatePace(distgpx.tracks[0].trksegs[0]));
 }
